@@ -1,7 +1,6 @@
-## Demo
-Multi-agent Path Finding
-
-![MAPF](/docs/images/mapf.gif)
+## Description
+This repository contains all the codes related to the research work ->
+"An Adaptive Agent-Specific Sub-Optimal Bounding Approach for Multi-Agent Path Finding"
 
 ## Requirement
 
