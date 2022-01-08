@@ -12,11 +12,11 @@ At first, you must prepare param file.
 
 To confirm details, see [a sample file](sample-param.txt).
 
-Then you can execute the simulator as following.
+Then you cancompile execute the simulator by the following commands in terminal:
 
-$make c
-
-$make crun param=sample-param.txt
+```
+make c
+make crun param=sample-param.txt
 ```
 
 ## Licence
