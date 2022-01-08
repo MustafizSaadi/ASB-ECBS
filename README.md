@@ -16,7 +16,7 @@ make crun param=sample-param.txt
 ```
 
 ## Licence
-This software is released under the MIT License, see [LICENSE.txt](LICENCE.txt).
+This software is released under the MIT License, see (LICENCE.txt).
 
 ## Author
 [Mustafizur Rahman] (https://github.com/MustafizSaadi)

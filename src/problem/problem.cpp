@@ -47,6 +47,7 @@ Problem::Problem(Graph* _G,
 }
 void Problem::init() {
   timestep = 0;
+  cost = 0;
 }
 
 Problem::~Problem() {

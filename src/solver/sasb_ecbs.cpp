@@ -675,7 +675,7 @@ void SASB_ECBS::getPartialPath(AN *n, Nodes &path)
 std::string SASB_ECBS::logStr()
 {
   std::string str;
-  str += "[solver] type:ECBS\n";
+  str += "[solver] type:SASB-ECBS\n";
   str += "[solver] w:" + std::to_string(w) + "\n";
   str += "[solver] ID:" + std::to_string(ID) + "\n";
   str += "[solver] Lowlevelnode:" + std::to_string(lowlevelnode) + "\n";
@@ -683,5 +683,8 @@ std::string SASB_ECBS::logStr()
   str += "[solver] ConflictCount:" + std::to_string(conflict_cnt) + "\n";
 
   str += Solver::logStr();
+
+  std::cout << "[solver] type:SASB-ECBS" << std::endl;
+
   return str;
 }

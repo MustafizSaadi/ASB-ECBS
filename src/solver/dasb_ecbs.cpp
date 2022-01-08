@@ -718,7 +718,7 @@ void DASB_ECBS::getPartialPath(AN *n, Nodes &path)
 std::string DASB_ECBS::logStr()
 {
   std::string str;
-  str += "[solver] type:ECBS\n";
+  str += "[solver] type:DASB-ECBS\n";
   str += "[solver] w:" + std::to_string(w) + "\n";
   str += "[solver] ID:" + std::to_string(ID) + "\n";
   str += "[solver] Lowlevelnode:" + std::to_string(lowlevelnode) + "\n";
@@ -726,5 +726,8 @@ std::string DASB_ECBS::logStr()
   str += "[solver] DynamicTime:" + std::to_string(dtime) + "\n";
 
   str += Solver::logStr();
+
+  std::cout << "[solver] type:DASB-ECBS" << std::endl;
+
   return str;
 }

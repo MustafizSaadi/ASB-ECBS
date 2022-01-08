@@ -584,5 +584,7 @@ std::string ECBS::logStr() {
   str += "[solver] ConflictCount:" + std::to_string(conflict_cnt) + "\n";
 
   str += Solver::logStr();
+
+  std::cout << "[solver] type:ECBS" << std::endl;
   return str;
 }

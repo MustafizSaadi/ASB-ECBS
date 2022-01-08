@@ -1,8 +1,6 @@
 /*
  * graph.cpp
  *
- * Purpose: Graph
- * Created by: Keisuke Okumura <okumura.k@coord.c.titech.ac.jp>
  */
 
 
@@ -32,7 +30,6 @@ Graph::Graph(std::mt19937* _MT) : MT(_MT) {
 void Graph::init() {
   directed = false;
   regFlg = true;
-  std::cout<<"regflagOn"<<std::endl;
 }
 
 Graph::~Graph() {
@@ -93,10 +90,6 @@ Nodes Graph::getPath(Node* _s, Node* _g,
   bool prohibited = !prohibitedNodes.empty();
   Nodes path, C;
   std::string key;
-  // if(prohibited)
-	// std::cout<<"Not empty"<<std::endl;
-  // else
-	// std::cout<<"empty"<<std::endl;
 
   // ==== fast implementation ====
   if (regFlg && !prohibited) {
@@ -121,11 +114,7 @@ Nodes Graph::getPath(Node* _s, Node* _g,
   SEARCHED.emplace(n->v->getId(), handle);
 
   while (!OPEN.empty()) {
-    //std::cout<<"In Open"<<std::endl;
-    // argmin
     n = OPEN.top().node;
-    //std::cout<<(n->v)->getPos().y<<" "<<(n->v)->getPos().x<<std::endl;
-
     // check goal condition
     if (n->v == _g) {
       invalid = false;
@@ -243,15 +232,10 @@ bool Graph::getPathInit(Node* _s, Node* _g)
   SEARCHED.emplace(n->v->getId(), handle);
 
   while (!OPEN.empty()) {
-    //std::cout<<"In Open"<<std::endl;
-    // argmin
     n = OPEN.top().node;
-    //std::cout<<(n->v)->getPos().y<<" "<<(n->v)->getPos().x<<std::endl;
-
-    // check goal condition
+    
     if (n->v == _g) {
       invalid = false;
-      //std::cout<<"True"<<std::endl<<std::endl<<std::endl;
       break;
     }
 
@@ -370,7 +354,6 @@ Paths Graph::getRandomStartGoal(int num) {
   Nodes ss(starts.size());
   Nodes gs(goals.size());
   bool flg;
-  //std::cout<<starts.size()<<" st "<<goals.size()<<" en "<<std::endl;
 
   std::copy(starts.begin(), starts.end(), ss.begin());
   std::copy(goals.begin(),  goals.end(), gs.begin());
@@ -402,51 +385,6 @@ Paths Graph::getRandomStartGoal(int num) {
 
     if (flg) break;
   }
-
-  // bool valid;
-  // valid = getPathInit(starts[2],goals[14]);
-  // points.push_back({starts[2],goals[14]});
-  // valid = getPathInit(starts[4],goals[5]);
-  // points.push_back({starts[4],goals[5]});
-  // valid = getPathInit(starts[12],goals[9]);
-  // points.push_back({starts[12],goals[9]});
-  // valid = getPathInit(starts[11],goals[17]);
-  // points.push_back({starts[11],goals[17]});
-
-  // string file = "/home/mustafizur/pibt/src/graph/lak503dmap-100agents-15.txt";
-  // int height = 194, width = 194;
-  // std::ifstream ifile(file);
-  // ifstream f(file.c_str());
-  // if(f.good())
-  // cout << "yes" << endl;
-  // int cnt;
-  // std::string text;
-  // //ifile.open("lak503dmap-100agents-0.txt");
-  // //if(ifile.is_open()){
-  // getline(ifile, text);
-  // cnt = atoi(text.c_str());
-  // while(cnt--){
-  //   int strow, stcol, enrow, encol;
-  //   ifile >> text;
-  //   char *pch;
-  //   char *dup = strdup(text.c_str());
-  //   pch = strtok (dup,",");
-  //   strow = atoi(pch);
-  //   pch = strtok (NULL, ",");
-  //   stcol = atoi(pch);
-  //   pch = strtok (NULL,",");
-  //   enrow = atoi(pch);
-  //   pch = strtok (NULL, ",");
-  //   encol = atoi(pch);
-  //   int stid = strow*width + stcol;
-  //   int enid = enrow*width + encol;
-  //   bool valid = getPathInit(node_id_table[stid], node_id_table[enid]);
-  //   if(valid)
-  //     points.push_back({node_id_table[stid], node_id_table[enid]});
-  //   //std::cout << strow << " " << stcol << " " << enrow << " " << encol << std::endl;
-  //   free(dup);
-  //}
- // }
 
   return points;
 }

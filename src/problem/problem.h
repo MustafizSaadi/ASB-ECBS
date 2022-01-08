@@ -55,5 +55,7 @@ public:
   bool visual_showicon;
   std::string visual_icon;
 
+  int cost;
+
   virtual std::string logStr();
 };

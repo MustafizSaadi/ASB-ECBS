@@ -32,7 +32,6 @@ void Solver::init() {
 
 void Solver::solveStart() {
   startT = std::chrono::system_clock::now();
-  std::cout << "solvestart" << std::endl;
 }
 
 void Solver::solveEnd() {
@@ -83,7 +82,6 @@ int Solver::getMaxLengthPaths(Paths& paths) {
 
 void Solver::formalizePath(Paths& paths) {
   int maxLength = getMaxLengthPaths(paths);
-  std::cout<<"maxLength "<<maxLength<<"paths "<<paths.size()<<std::endl;
   Node* g;
   for (int i = 0; i < paths.size(); ++i) {
     g = paths[i][paths[i].size() - 1];

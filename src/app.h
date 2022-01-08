@@ -69,8 +69,6 @@ Problem* run(int argc, char *argv[])
     }
   }
 
-  std::cout << "reading params" << "\n";
-
   /************************
    * default setting
    ************************/
@@ -112,8 +110,6 @@ Problem* run(int argc, char *argv[])
   setParams(configfile, envConfig, solverConfig, visualConfig);
 
 //#ifdef OF
-  std::cout << "done." << "\n";
-  std::cout << "loading map : " << envConfig->timesteplimit << "\n";
 //#endif
 
 
@@ -157,8 +153,6 @@ Problem* run(int argc, char *argv[])
     points = G->getRandomStartGoal(envConfig->agentnum);
     //std::cout<<"Random"<<std::endl;
   }
-
- cout << "points " << points.size() <<endl;
   
   for (int i = 0; i < envConfig->agentnum; ++i) {
     Agent* a = new Agent(points[i][0]);
@@ -201,7 +195,6 @@ Problem* run(int argc, char *argv[])
       std::cout << "error@run, CBS cannot solve except MAPF" << "\n";
       std::exit(1);
     }
-    cout << "CBS" <<endl;
     solver = new CBS(P, solverConfig->ID);
     break;
   case Param::SOLVER_TYPE::S_ECBS:
@@ -210,7 +203,6 @@ Problem* run(int argc, char *argv[])
       std::cout << "error@run, ECBS cannot solve except MAPF" << "\n";
       std::exit(1);
     }
-    cout << "ECBS " <<solverConfig->suboptimal<< endl;
     solver = new ECBS(P, solverConfig->suboptimal, solverConfig->ID);
     break;
   case Param::SOLVER_TYPE::S_SASB_ECBS:
@@ -374,7 +366,11 @@ Problem* run(int argc, char *argv[])
   if (envConfig->printlog) {
     std::cout << result << "\n";
   } else if (envConfig->printtime) {
+    std::cout << "Map Name:" << envConfig->field << std::endl;
+    std::cout << "Solution Cost:" << P->cost << std::endl;
+    std::cout << "Makespan:" << P->getTerminationTime() << std::endl;
     std::cout << "[solver] elapsed:" << solver->getElapsed() << "\n\n";
+    
   }
 
 

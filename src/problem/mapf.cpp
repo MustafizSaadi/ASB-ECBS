@@ -38,34 +38,17 @@ void MAPF::init() {
     std::exit(1);
   }
 
-  // allocation, t=0
-  //string file = "./"+ folder_name +"/" + file_name + ".txt";
-  //ofstream of(file);
-  // std::cout<<"Coordinate "<<std::endl;
-  //of << to_string(A.size()) << endl ;
+
   for (int i = 0; i < A.size(); ++i) {
-    // string file = "./"+ folder_name +"/path" + to_string(i) + ".txt";
-    // ofstream of(file);
-    //of.open(file.c_str());
+    
     A[i]->setTask(T_OPEN[i]);
     A[i]->setGoal(A[i]->getTask()->getG()[0]);
     Node* posst = A[i]->getNode();
     Node* posen = A[i]->getGoal(); 
-    //of << int(posst->getPos().y) << "," << int(posst->getPos().x) << "," << int(posen->getPos().y) << "," << int(posen->getPos().x) << "," << endl;
+    
     A[i]->updateHist();
   }
-  //cout << str <<endl;
-  // string filename = "agents" + to_string(A.size()) +".txt";
-  // const char *fptr = filename.c_str();
-  // ofstream myfile;
-  // myfile.open(fptr);
-  // myfile<<str; 
-  // myfile.close();
-  //const char *fptr = filename.c_str();
-  //freopen( fptr, "w",stdout);
-  //printf("%s %s",str,filename);
-  //fclose(stdout);
-  //of.close();
+  
 }
 
 MAPF::~MAPF() {}
@@ -121,6 +104,7 @@ std::string MAPF::logStr() {
     str += a->logStr();
     str += "size:" + std::to_string(pathsize) + "\n";
   }
+  Problem::cost = solnCost;
   str += "SolutionCost:" + std::to_string(solnCost) + "\n";
   return str;
 }
