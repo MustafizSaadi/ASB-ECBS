@@ -1,5 +1,6 @@
 ## Description
 This repository contains all the codes related to the research work ->
+
 "An Adaptive Agent-Specific Sub-Optimal Bounding Approach for Multi-Agent Path Finding"
 
 ## Requirement
@@ -7,11 +8,14 @@ This repository contains all the codes related to the research work ->
 The latest implementation relies on [boost](https://www.boost.org/).
 
 ## Usage
-At first, you must prepare param file. \n
-To confirm details, see [a sample file](sample-param.txt). \n
+At first, you must prepare param file.
+
+To confirm details, see [a sample file](sample-param.txt).
+
 Then you can execute the simulator as following.
 
-$make c \n
+$make c
+
 $make crun param=sample-param.txt
 ```
 
