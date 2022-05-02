@@ -15,8 +15,6 @@ struct conflicted_node {
   int node_id;
   int time;
   double m_w;
-  // conflicted_node* prev;
-  // conflicted_node* next;
 };
 
 class Agent {
@@ -36,8 +34,6 @@ public:
   Agent(Node* v);  // initial location
   ~Agent();
 
-  // conflicted_node* head; //start of the conflicted nodes list
-  // conflicted_node* tail; //end of the conflicted nodes list
   std::vector<conflicted_node*> conflicted_list;
   std::map<int,Node*>time_conflict_map; 
   int conf;          //current conflict count

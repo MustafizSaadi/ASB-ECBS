@@ -47,7 +47,6 @@ bool CBS::solve() {
 
     // solve with independent detection
     while (true) {
-      std::cout<<"Whole "<<WHOLE.size()<<std::endl;
       for (auto BLOCK : WHOLE) {
         if (!solvePart(PATHS, BLOCK)) {
           solveEnd();
@@ -69,7 +68,6 @@ bool CBS::solve() {
     P->update();
 
     if (P->getTimestep() >= P->getTimestepLimit()) {
-	std::cout<<"Timeout"<<std::endl;
 	break;
 	}
   }
@@ -150,8 +148,6 @@ bool CBS::checkAgents(Paths& paths, std::vector<Agents>& whole) {
 }
 
 bool CBS::solvePart(Paths& paths, Agents& block) {
-
-  cout<< "solvepart" << endl;
   CTNode* node;
   Constraints constraints;
   std::vector<CTNode*> OPEN, ALL;
@@ -319,12 +315,8 @@ Constraints CBS::valid(CTNode* node, Agents& block) {
           for (int l = 0; l < ids.size(); ++l) {
             if (k == l) continue;
             Conflict* c = new Conflict { A[ids[l]], t, v, v, true, "" };
-            //setCKey(c);
             setCKey(c, min(A[ids[l]]->getId(),A[ids[k]]->getId()), max(A[ids[l]]->getId(),A[ids[k]]->getId()));
             constraint.push_back(c);
-            // if((A[ids[l]]->conflicted_list).size()==0){
-
-            // }
           }
           constraints.push_back(constraint);
         }
@@ -345,8 +337,6 @@ Constraints CBS::valid(CTNode* node, Agents& block) {
         j = std::distance(paths.begin(), itr4);
         Conflict* c1 = new Conflict { A[i], t, (*itr3)[t], (*itr3)[t-1], false, "" };
         Conflict* c2 = new Conflict { A[j], t, (*itr4)[t], (*itr4)[t-1], false, "" };
-        // setCKey(c1);
-        // setCKey(c2);
         setCKey(c1, min(A[i]->getId(),A[j]->getId()), max(A[i]->getId(),A[j]->getId()));
         setCKey(c2, min(A[i]->getId(),A[j]->getId()), max(A[i]->getId(),A[j]->getId()));
         constraints.push_back({ c1 });

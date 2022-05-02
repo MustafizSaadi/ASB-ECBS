@@ -1,7 +1,11 @@
 /*
  * dasb_ecbs.cpp
  *
+ * Purpose: Dynamic Agent-Specific Sub-Optimal Bounded ECBS
  *
+ * An Adaptive Agent-Specific Sub-Optimal Bounding Approach for Multi-Agent Path Finding.
+ *
+ * Created by: Mustafizur Rahman <mustafizz996@gmail.com>
  */
 
 #include "dasb_ecbs.h"
@@ -33,16 +37,10 @@ void DASB_ECBS::init()
   cnt = 0;
   conflict_cnt = 0;
   dtime = 0;
-  //std::cout<<"weight "<< w<<std::endl;
 }
-
-// bool compare(Agent* a, Agent* b){
-//   return (*a).conf < (*b).conf;
-// }
 
 bool DASB_ECBS::solvePart(Paths &paths, Agents &block)
 {
-  //int highLevelNode = 0;
   CTNode *node;
   Constraints constraints;
 
@@ -65,7 +63,6 @@ bool DASB_ECBS::solvePart(Paths &paths, Agents &block)
 
   for (auto a : block)
   {
-    //cout<< "conflict " << (*a).conf <<endl;
     (*a).m_w = w;
   }
 
@@ -159,6 +156,8 @@ bool DASB_ECBS::solvePart(Paths &paths, Agents &block)
 
     uint64_t current_time3 = timeSinceEpochMillisec();
 
+    // Conflict calculation
+
     for (auto a : block)
     {
       auto itr = std::find_if(A.begin(), A.end(),
@@ -170,6 +169,7 @@ bool DASB_ECBS::solvePart(Paths &paths, Agents &block)
       maxi = max(maxi, (*a).conf);
     }
 
+    // Dynamic weight assignment
     if (maxi != 0)
     {
       offset = (w - 1) / maxi;
@@ -177,19 +177,6 @@ bool DASB_ECBS::solvePart(Paths &paths, Agents &block)
       for (auto a : block)
       {
         (*a).m_w = 1 + ((*a).conf * offset);
-
-        // if ((*a).getId() == atoi(fields[0].c_str()))
-        // {
-        //   max_weight = fmax(max_weight, (*a).m_w);
-        //   first = a;
-        // }
-        // else if ((*a).getId() == atoi(fields[1].c_str()))
-        // {
-        //   max_weight = fmax(max_weight, (*a).m_w);
-        //   second = a;
-        // }
-
-        //add += offset;
       }
     }
 
@@ -201,7 +188,6 @@ bool DASB_ECBS::solvePart(Paths &paths, Agents &block)
     {
       CTNode *newNode = new CTNode{constraint, node->paths, 0, node, true, {}, 0};
       highLevelNode++;
-      //std::cout<<" In Loop"<<std::endl;
       // formating
       Node *g;
       Nodes p;
@@ -230,7 +216,7 @@ bool DASB_ECBS::solvePart(Paths &paths, Agents &block)
   }
 
   if (!OPEN.empty())
-  { // sucssess
+  { // success
     for (int i = 0; i < paths.size(); ++i)
     {
       if (!node->paths[i].empty())
@@ -255,7 +241,7 @@ void DASB_ECBS::invoke(CTNode *node, Agents &block)
   int d;
   // calc path
   if (node->c.empty())
-  { // initail
+  { // initial
     Paths paths;
     for (int i = 0; i < A.size(); ++i)
     {
@@ -473,11 +459,8 @@ Nodes DASB_ECBS::AstarSearch(Agent *a, CTNode *node)
 
   Nodes path, tmpPath, C; // return
 
-  //double bw = w;
-
   double bw = (*a).m_w;
   mp[(*a).getId()].push_back((*a).m_w);
-  //std::cout<<"weight for agent "<<(*a).getId()<< " is "<<bw<<std::endl;
 
   // ==== fast implementation ====
   // constraint free
@@ -487,8 +470,6 @@ Nodes DASB_ECBS::AstarSearch(Agent *a, CTNode *node)
     table_fmin.at(a->getId()) = path.size() - 1;
     return path;
   }
-
-  //std::cout<<"cnt"<<std::endl;
 
   // goal condition
   bool existGoalConstraint = false;
@@ -515,7 +496,6 @@ Nodes DASB_ECBS::AstarSearch(Agent *a, CTNode *node)
   std::unordered_map<std::string, boost::heap::fibonacci_heap<Fib_AN>::handle_type> SEARCHED;
   std::unordered_set<std::string> CLOSE; // key
   AN *n = new AN{_s, 0, pathDist(_s, _g), nullptr};
-  //AN* nfocal = new AN { _s, 0, pathDist(_s, _g), nullptr };
   auto handle = OPEN.push(Fib_AN(n));
   key = getKey(n);
   SEARCHED.emplace(key, handle);
@@ -594,18 +574,13 @@ Nodes DASB_ECBS::AstarSearch(Agent *a, CTNode *node)
     // search neighbor
     C = G->neighbor(n->v);
     C.push_back(n->v);
-    // int cnt1 = 0,cnt2 =0,cnt3 =0;
-
-    //cout << C.size() << endl;
 
     for (auto m : C)
     {
-      //cnt1++;
       g = n->g + 1;
       key = getKey(g, m);
       if (CLOSE.find(key) != CLOSE.end())
         continue;
-      //cnt3 ++;
       // check constraints
       auto constraint = std::find_if(constraints.begin(), constraints.end(),
                                      [a, g, m, n](Conflict *c)
@@ -620,7 +595,6 @@ Nodes DASB_ECBS::AstarSearch(Agent *a, CTNode *node)
                                      });
       if (constraint != constraints.end())
       {
-        //cnt1 ++;
         continue;
       }
       f = g + pathDist(m, _g);
@@ -643,7 +617,6 @@ Nodes DASB_ECBS::AstarSearch(Agent *a, CTNode *node)
         SEARCHED.emplace(key, handle);
         getPartialPath(l, tmpPath);
         table_conflict.emplace(key, h3(a, tmpPath, paths));
-        //cnt2++;
       }
       else
       {
@@ -659,7 +632,6 @@ Nodes DASB_ECBS::AstarSearch(Agent *a, CTNode *node)
           OPEN.increase(handle);
           updateH = true;
         }
-        //cnt3 ++;
       }
 
       tmpPath.clear();
@@ -682,7 +654,6 @@ Nodes DASB_ECBS::AstarSearch(Agent *a, CTNode *node)
         }
       }
     }
-    //std::cout<<" cnt "<<cnt1<<" "<<cnt2<<" "<<cnt3<<std::endl;
   }
 
   int soln = INT_MAX;

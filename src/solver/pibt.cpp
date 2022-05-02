@@ -50,7 +50,6 @@ bool PIBT::solve() {
     update();
     P->update();
     if (P->getTimestep() >= P->getTimestepLimit()) {
-	std::cout<<"Timeout"<<std::endl;
 	break;
 	}
   }

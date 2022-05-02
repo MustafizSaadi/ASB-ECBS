@@ -41,7 +41,6 @@ void Solver::solveEnd() {
 }
 
 void Solver::WarshallFloyd(std:: string input_file) {
-  //printf("Yes\n");
   int nodeNum = G->getNodesNum();
   Nodes neighbor;
   int INF = 100000;
@@ -49,15 +48,12 @@ void Solver::WarshallFloyd(std:: string input_file) {
 
   // initialize weight
   for (int i = 0; i < nodeNum; ++i) {
-    //printf("Yes\n");
     neighbor = G->neighbor(G->getNodeFromIndex(i));
     for (auto v : neighbor) {
       dists(i, v->getIndex()) = 1;
     }
     dists(i, i) = 0;
   }
-
-  //std:: cout << "Node num " << nodeNum << std::endl;
 
   // main loop
   for (int k = 0; k < nodeNum; ++k) {

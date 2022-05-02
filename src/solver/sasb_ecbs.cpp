@@ -1,8 +1,12 @@
 /*
  * sasb_ecbs.cpp
  *
+ * Purpose: Static Agent-Specific Sub-Optimal Bounded ECBS
+ *
+ * An Adaptive Agent-Specific Sub-Optimal Bounding Approach for Multi-Agent Path Finding.
+ *
+ * Created by: Mustafizur Rahman <mustafizz996@gmail.com>
  */
-
 #include "sasb_ecbs.h"
 #include "../util/util.h"
 #include <bits/stdc++.h>
@@ -29,19 +33,12 @@ void SASB_ECBS::init()
 {
   for (auto a : A)
     table_fmin.emplace(a->getId(), 0);
-  //std::cout<<"weight "<< w<<std::endl;
   cnt = 0;
   conflict_cnt = 0;
 }
 
-// bool compare(Agent* a, Agent* b){
-//   return (*a).conf < (*b).conf;
-// }
-
 bool SASB_ECBS::solvePart(Paths &paths, Agents &block)
 {
-  //int highLevelNode = 0;
-
   CTNode *node;
   Constraints constraints;
 
@@ -63,7 +60,6 @@ bool SASB_ECBS::solvePart(Paths &paths, Agents &block)
 
   for (auto a : block)
   {
-    //cout<< "conflict " << (*a).conf <<endl;
     (*a).m_w = w;
   }
 
@@ -79,6 +75,7 @@ bool SASB_ECBS::solvePart(Paths &paths, Agents &block)
   //int maxi = 0;
   uint64_t current_time3 = timeSinceEpochMillisec();
 
+  // Conflict calculation
   for (auto a : block)
   {
     auto itr = std::find_if(A.begin(), A.end(),
@@ -89,12 +86,12 @@ bool SASB_ECBS::solvePart(Paths &paths, Agents &block)
     maxi = max(maxi, (*a).conf);
   }
 
+  // Static weight assignment
   double offset = (w - 1) / maxi;
 
   double add = 0;
   for (auto a : block)
   {
-    //cout<< "conflict " <<(*a).getId()<< " is " << (*a).conf <<endl;
     (*a).m_w = 1 + ((*a).conf * offset);
   }
 
@@ -166,7 +163,6 @@ bool SASB_ECBS::solvePart(Paths &paths, Agents &block)
     {
       CTNode *newNode = new CTNode{constraint, node->paths, 0, node, true, {}, 0};
       highLevelNode++;
-      //std::cout<<" In Loop"<<std::endl;
       // formating
       Node *g;
       Nodes p;
@@ -195,7 +191,7 @@ bool SASB_ECBS::solvePart(Paths &paths, Agents &block)
   }
 
   if (!OPEN.empty())
-  { // sucssess
+  { // success
     for (int i = 0; i < paths.size(); ++i)
     {
       if (!node->paths[i].empty())
@@ -220,7 +216,7 @@ void SASB_ECBS::invoke(CTNode *node, Agents &block)
   int d;
   // calc path
   if (node->c.empty())
-  { // initail
+  { // initial
     Paths paths;
     for (int i = 0; i < A.size(); ++i)
     {
@@ -438,10 +434,7 @@ Nodes SASB_ECBS::AstarSearch(Agent *a, CTNode *node)
 
   Nodes path, tmpPath, C; // return
 
-  //double bw = w;
-
   double bw = (*a).m_w;
-  //std::cout<<"weight for agent "<<(*a).getId()<< " is "<<bw<<std::endl;
 
   // ==== fast implementation ====
   // constraint free
@@ -451,8 +444,6 @@ Nodes SASB_ECBS::AstarSearch(Agent *a, CTNode *node)
     table_fmin.at(a->getId()) = path.size() - 1;
     return path;
   }
-
-  //std::cout<<"cnt"<<std::endl;
 
   // goal condition
   bool existGoalConstraint = false;
@@ -479,7 +470,6 @@ Nodes SASB_ECBS::AstarSearch(Agent *a, CTNode *node)
   std::unordered_map<std::string, boost::heap::fibonacci_heap<Fib_AN>::handle_type> SEARCHED;
   std::unordered_set<std::string> CLOSE; // key
   AN *n = new AN{_s, 0, pathDist(_s, _g), nullptr};
-  //AN* nfocal = new AN { _s, 0, pathDist(_s, _g), nullptr };
   auto handle = OPEN.push(Fib_AN(n));
   key = getKey(n);
   SEARCHED.emplace(key, handle);
@@ -594,7 +584,7 @@ Nodes SASB_ECBS::AstarSearch(Agent *a, CTNode *node)
       AN *l;
       bool updateH = false;
       if (itrS == SEARCHED.end())
-      { 
+      {
         cnt++;
         l = new AN{m, g, f, n};
         auto handle = OPEN.push(Fib_AN(l));

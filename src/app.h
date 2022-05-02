@@ -151,7 +151,6 @@ Problem* run(int argc, char *argv[])
     setScenario(envConfig->scenariofile, points, G);
   } else {
     points = G->getRandomStartGoal(envConfig->agentnum);
-    //std::cout<<"Random"<<std::endl;
   }
   
   for (int i = 0; i < envConfig->agentnum; ++i) {
@@ -227,7 +226,6 @@ Problem* run(int argc, char *argv[])
       std::cout << "error@run, ECBS cannot solve except MAPF" << "\n";
       std::exit(1);
     }
-    cout << "BCBS_1_W " <<solverConfig->suboptimal<< endl;
     solver = new BCBS_1_w(P, solverConfig->suboptimal, solverConfig->ID);
     break;
   case Param::SOLVER_TYPE::S_BCBS_W_1:
@@ -236,7 +234,6 @@ Problem* run(int argc, char *argv[])
       std::cout << "error@run, ECBS cannot solve except MAPF" << "\n";
       std::exit(1);
     }
-    cout << "BCBS_W_1 " <<solverConfig->suboptimal<< endl;
     solver = new BCBS_w_1(P, solverConfig->suboptimal, solverConfig->ID);
     break;
   case Param::SOLVER_TYPE::S_iECBS:

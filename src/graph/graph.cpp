@@ -118,7 +118,6 @@ Nodes Graph::getPath(Node* _s, Node* _g,
     // check goal condition
     if (n->v == _g) {
       invalid = false;
-      //std::cout<<"True"<<std::endl<<std::endl<<std::endl;
       break;
     }
 
@@ -169,7 +168,6 @@ Nodes Graph::getPath(Node* _s, Node* _g,
 
       auto itrS = SEARCHED.find(m->getId());
       if (itrS == SEARCHED.end()) {  // new node
-        //(*cnt2)++;
         AN* l = new AN { m, n->g + 1, f, n };
         auto handle = OPEN.push(Fib_AN(l));
         SEARCHED.emplace(l->v->getId(), handle);

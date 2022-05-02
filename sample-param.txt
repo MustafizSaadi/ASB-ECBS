@@ -5,16 +5,16 @@ PROBLEM_TYPE=MAPF
 
 // choose solver
 // option: { PIBT, HCA, WHCA, PPS, CBS, ECBS, SASB_ECBS, DASB_ECBS, iECBS, TP, winPIBT, BCBS_W_1, BCBS_1_W}
-SOLVER_TYPE=DASB_ECBS
+SOLVER_TYPE=SASB_ECBS
 
 // choose log folder
 // option:: {for ECBS & others log, for SASB_ECBS sasb_ecbs_log, for DASB_ECBS dasb_ecbs_log, for bcbs_w_1 bcbs_w_log, for bcbs_1_w bcbs_1_log}
-LOG_FOLDER=dasb_ecbs_log
+LOG_FOLDER=sasb_ecbs_log
 
 // choose map file
 field=./map/32by32_agents10_ex30.map
 // number of agents
-agentnum=100
+agentnum=10
 
 // timestep limitation
 timesteplimit=10000
